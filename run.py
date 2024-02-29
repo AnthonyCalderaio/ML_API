@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from stock_prediction.get_nvda_data import predict_todays_price;
+from stock_prediction.get_nvda_data import get_nvidia_data;
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def nvidia_predictor():
     json_data = request.get_json()
 
     # Pass the JSON data to a function in another file
-    response_data = predict_todays_price(json_data)
+    response_data = get_nvidia_data()
 
     # Return the response in JSON format
     return jsonify(response_data)
