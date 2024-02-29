@@ -10,7 +10,7 @@ def hello():
 
 # Stock predictor route
 # Define a route for your API endpoint
-@app.route('/nvidia_prediction', methods=['POST'])
+@app.route('/nvidia_prediction', methods=['GET'])
 def nvidia_predictor():
 
  # Get the JSON data from the POST request
