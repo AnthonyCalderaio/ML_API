@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from stock_prediction.get_nvda_data import get_nvidia_data;
+from stock_prediction.model import predict_todays_price;
 
 app = Flask(__name__)
 
@@ -12,15 +12,16 @@ def hello():
 # Define a route for your API endpoint
 @app.route('/nvidia_prediction', methods=['GET'])
 def nvidia_predictor():
-
+   
  # Get the JSON data from the POST request
-    json_data = request.get_json()
+    # json_data = request.get_json()
 
     # Pass the JSON data to a function in another file
-    response_data = get_nvidia_data()
+    response_data = predict_todays_price()
 
+    print('response_data:',response_data)
     # Return the response in JSON format
-    return jsonify(response_data)
+    return str(response_data)
 
 
 if __name__ == '__main__':

@@ -29,9 +29,10 @@ def get_nvidia_data(start_date = None, end_date = None, download_csv = False):
         start_date = yesterday_and_today()[0]
     if(not end_date):
         end_date = yesterday_and_today()[1]
-    
+    print('hi1')
     # Fetch the historical data from Yahoo Finance API
     nvidia_data = yf.download(name, start=start_date, end=end_date)
+    print('nvidia_data: HERE',nvidia_data)
 
     if(download_csv):
         save_to_csv(nvidia_data, 'nvidia_stock_data.csv')
