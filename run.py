@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 from stock_prediction.model import predict_todays_price;
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Define a route for your API endpoint
 @app.route('/hello', methods=['GET'])
@@ -22,7 +24,6 @@ def nvidia_predictor():
     print('response_data:',response_data)
     # Return the response in JSON format
     return str(response_data)
-
 
 if __name__ == '__main__':
     # Run the Flask app
