@@ -1,4 +1,4 @@
-# from get_nvda_data import get_nvidia_data
+from get_nvda_data import get_nvidia_data
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
