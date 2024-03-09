@@ -58,14 +58,14 @@ def save_to_csv(data_frame, desiredFileName):
     
     print(f"CSV file '{desiredFileName}' saved successfully in the working directory.")
 
-def send_email():
+def send_email(message = ''):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(config['sender_email'], config['gmail_app_password'])
 
     msg = EmailMessage()
 
-    message = 'test message from: '+config['environment']
+    message = message + 'from: '+config['environment']
     msg.set_content(message)
     msg['Subject'] = 'Test'
     msg['From'] = config['sender_email']
@@ -78,10 +78,12 @@ def report_daily():
     starttime=time.time()
     interval=86400 
     while True:
-        send_email()
+        send_email('Daily email ran: ')
         time.sleep(interval - ((time.time() - starttime) % interval))
 
-send_email()
+
+# Run Functions
+# send_email()
 report_daily()
 
 
