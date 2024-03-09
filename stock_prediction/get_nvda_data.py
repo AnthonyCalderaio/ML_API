@@ -7,38 +7,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 import smtplib
 from email.message import EmailMessage
-import sys
-
-
-
-def setupConfig():
-    print('attemping to get config from api')
-    try:
-       
-        # oldWd = os.getcwd()
-        print('currently:',os.getcwd())
-        from etc.secrets import config
-        print('but got config from api',config)
-        print()
-
-
-    except:
-        # Go up a directory
-        # os.chdir('..')
-
-        # Add that directory path to the system
-        # sys.path.append(os.getcwd()) 
-        # os.chdir(oldWd)
-        # print('now:',os.getcwd())
-
-        # Environment Variables
-        from env_secrets import config
-        print('but got config from local',config)
-
-    
-
-    print('secrets:')
-    
+import time
+from env_secrets import config      
 
 
 # numberToReportTo = str(os.environ.get('number_to_report_to'))
@@ -88,25 +58,31 @@ def save_to_csv(data_frame, desiredFileName):
     
     print(f"CSV file '{desiredFileName}' saved successfully in the working directory.")
 
+def send_email():
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(config['sender_email'], config['gmail_app_password'])
 
-setupConfig()
+    msg = EmailMessage()
 
-# def send_email():
-#     server = smtplib.SMTP('smtp.gmail.com', 587)
-#     server.starttls()
-#     server.login(config['sender_email'], config['gmail_app_password'])
+    message = 'test message from: '+config['environment']
+    msg.set_content(message)
+    msg['Subject'] = 'Test'
+    msg['From'] = config['sender_email']
+    msg['To'] = config['recipient_email']
+    print('msg:',msg)
+    server.send_message(msg)
 
-#     msg = EmailMessage()
 
-#     message = 'test message'
-#     msg.set_content(message)
-#     msg['Subject'] = 'Test'
-#     msg['From'] = config['sender_email']
-#     msg['To'] = config['recipient_email']
-#     print('msg:',msg)
-#     server.send_message(msg)
+def report_daily():
+    starttime=time.time()
+    interval=86400 
+    while True:
+        send_email()
+        time.sleep(interval - ((time.time() - starttime) % interval))
 
-# send_email()
+send_email()
+report_daily()
 
 
 # Example usage:
