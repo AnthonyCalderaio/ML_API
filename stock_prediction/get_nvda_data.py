@@ -12,25 +12,28 @@ import sys
 
 
 def setupConfig():
+    print('attemping to get config from api')
+    try:
+       
+        # oldWd = os.getcwd()
+        print('currently:',os.getcwd())
+        from etc.secrets import config
+        print('but got config from api',config)
+        print()
 
-    sys.path.append('/etc/secrets')
-    sys.path.append(os.getcwd()+'/etc/secrets') 
-    import config
-    print(config['recipient_email'])
-    
-    # print('/etc/secrets/',os.getcwd()+'/etc/secrets/env_secrets.py')
-    # import
-    # where_am_i = os.getenv('WHEREAMI')
-    # else(where_am_i is None):
-    #     print("where_am_i:",where_am_i)
-    #     # Go up a directory
-    #     os.chdir('..')
 
-    #     # Add that directory path to the system
-    #     sys.path.append(os.getcwd()) 
+    except:
+        # Go up a directory
+        # os.chdir('..')
 
-    #     # Environment Variables
-    #     from env_secrets import config
+        # Add that directory path to the system
+        # sys.path.append(os.getcwd()) 
+        # os.chdir(oldWd)
+        # print('now:',os.getcwd())
+
+        # Environment Variables
+        from env_secrets import config
+        print('but got config from local',config)
 
     
 

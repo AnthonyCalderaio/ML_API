@@ -1,15 +1,18 @@
-from get_nvda_data import get_nvidia_data
-
+import os 
+from stock_prediction.get_nvda_data import get_nvidia_data
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 import pandas as pd
 import numpy as np
-import os 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
+# dir_path = os.path.dirname(os.path.realpath(__file__))
+
+print(os.getcwd())
 
 # import the data
-dataset = pd.read_csv('stock_prediction/nvidia_stock_data.csv')
+dataset = pd.read_csv(os.getcwd()+'/stock_prediction/nvidia_stock_data.csv')
 
 # define the data
 X = dataset.iloc[:, [0, 1, 2, 4, 5]].values
