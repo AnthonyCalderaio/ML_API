@@ -1,4 +1,4 @@
-from stock_prediction.get_nvda_data import get_nvidia_data
+# from get_nvda_data import get_nvidia_data
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -7,9 +7,6 @@ import pandas as pd
 import numpy as np
 import os 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-
-# print(dir_path)
-# print(os.listdir())
 
 # import the data
 dataset = pd.read_csv('stock_prediction/nvidia_stock_data.csv')
@@ -28,8 +25,6 @@ rf_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
 # np.ravel turns from 2d array to 1d array
 rf_regressor.fit(X_train, np.ravel(y_train))
 
-# print(y_train)
-
 # # predict the data
 print('x_test')
 print(X_test[0:1, :])
@@ -38,10 +33,6 @@ y_pred = rf_regressor.predict(X_test)
 # # evaluation
 mse = mean_squared_error(y_test, y_pred)
 print("Mean Squared Error:", mse)
-
-
-
-
 
 # functions
 def predict_todays_price():

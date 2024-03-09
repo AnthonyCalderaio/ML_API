@@ -1,9 +1,44 @@
 # Python code to pull historical data from Yahoo Finance API for Nvidia stocks
 
+
 import yfinance as yf
 import os
 import pandas as pd
 from datetime import datetime, timedelta
+import smtplib
+from email.message import EmailMessage
+import sys
+
+
+
+def setupConfig():
+
+    sys.path.append('/etc/secrets')
+    sys.path.append(os.getcwd()+'/etc/secrets') 
+    import config
+    print(config['recipient_email'])
+    
+    # print('/etc/secrets/',os.getcwd()+'/etc/secrets/env_secrets.py')
+    # import
+    # where_am_i = os.getenv('WHEREAMI')
+    # else(where_am_i is None):
+    #     print("where_am_i:",where_am_i)
+    #     # Go up a directory
+    #     os.chdir('..')
+
+    #     # Add that directory path to the system
+    #     sys.path.append(os.getcwd()) 
+
+    #     # Environment Variables
+    #     from env_secrets import config
+
+    
+
+    print('secrets:')
+    
+
+
+# numberToReportTo = str(os.environ.get('number_to_report_to'))
 
 def yesterday_and_today():
     # Get today's date
@@ -20,7 +55,7 @@ def yesterday_and_today():
     return [yesterday_str, today_str]
     
 
-def get_nvidia_data(start_date = None, end_date = None, download_csv = False):
+def get_nvidia_data(start_date = None, end_date = None):
     # Define the ticker symbol for Nvidia
     name = 'NVDA'
     
@@ -29,32 +64,48 @@ def get_nvidia_data(start_date = None, end_date = None, download_csv = False):
         start_date = yesterday_and_today()[0]
     if(not end_date):
         end_date = yesterday_and_today()[1]
-    print('hi1')
+
     # Fetch the historical data from Yahoo Finance API
     nvidia_data = yf.download(name, start=start_date, end=end_date)
-    print('nvidia_data: HERE',nvidia_data)
 
-    if(download_csv):
-        save_to_csv(nvidia_data, 'nvidia_stock_data.csv')
     
     # Return the historical data
-    return nvidia_data
+    return nvidia_data #Type is data_frame
 
 
-def save_to_csv(data_frame, filename):
+def save_to_csv(data_frame, desiredFileName):
     # Get the current working directory
     cwd = os.getcwd()
     
     # Define the file path where the CSV file will be saved
-    file_path = os.path.join(cwd, filename)
+    file_path = os.path.join(cwd, desiredFileName)
     
     # Save the DataFrame to a CSV file in the working directory
     data_frame.to_csv(file_path, index=False)
     
-    print(f"CSV file '{filename}' saved successfully in the working directory.")
+    print(f"CSV file '{desiredFileName}' saved successfully in the working directory.")
 
-# Example usage
-# nvidia_stock_data = get_nvidia_data()
-# print(nvidia_stock_data.head())  # Display the first few rows of the data
 
-# save_to_csv(nvidia_stock_data, 'nvidia_stock_data.csv')
+setupConfig()
+
+# def send_email():
+#     server = smtplib.SMTP('smtp.gmail.com', 587)
+#     server.starttls()
+#     server.login(config['sender_email'], config['gmail_app_password'])
+
+#     msg = EmailMessage()
+
+#     message = 'test message'
+#     msg.set_content(message)
+#     msg['Subject'] = 'Test'
+#     msg['From'] = config['sender_email']
+#     msg['To'] = config['recipient_email']
+#     print('msg:',msg)
+#     server.send_message(msg)
+
+# send_email()
+
+
+# Example usage:
+# 
+# save_to_csv(get_nvidia_data(), 'nvidia_stock_data.csv')
