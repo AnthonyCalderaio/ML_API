@@ -9,7 +9,6 @@ from stock_prediction.model import train_nvidia_model, get_todays_prediction
 from stock_prediction.get_nvda_data import get_nvidia_data
 import time
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -17,6 +16,7 @@ CORS(app)
 @app.route('/hello', methods=['GET'])
 def hello():
     return jsonify({'message': 'Hello, World!'})
+
 
 @app.route('/initialize_data', methods=['GET'])
 def initialize_data():
@@ -32,6 +32,7 @@ def initialize_data():
 
 # Stock predictor route
 # Define a route for your API endpoint
+@app.before_first_request(initialize_data())
 @app.route('/nvidia_prediction', methods=['GET'])
 def nvidia_predictor():
     # Pass the JSON data to a function in another file
@@ -42,15 +43,5 @@ def nvidia_predictor():
 
 if __name__ == '__main__':
     # Run the Flask app
-    save_to_csv(get_nvidia_data('2021-01-01', None), sys.path[0]+'/stock_prediction/latest_nvidia_data.csv')
-    time.sleep(10) 
-    train_nvidia_model()
-    time.sleep(10) 
-    report_daily(get_todays_prediction())
-    time.sleep(10)
-    print('Directory contents:',os.listdir())
-    time.sleep(10)
-    # os.chdir(sys.path[0]+'/stock_prediction')
-    # print('Directory contents:',os.listdir())
     app.run(debug=True)
     
