@@ -18,6 +18,18 @@ CORS(app)
 def hello():
     return jsonify({'message': 'Hello, World!'})
 
+@app.route('/initialize_data', methods=['GET'])
+def initialize_data():
+    save_to_csv(get_nvidia_data('2021-01-01', None), sys.path[0]+'/stock_prediction/latest_nvidia_data.csv')
+    time.sleep(10) 
+    train_nvidia_model()
+    time.sleep(10) 
+    report_daily(get_todays_prediction())
+    time.sleep(10)
+    print('Directory contents:',os.listdir())
+    time.sleep(10)
+    return 'complete'
+
 # Stock predictor route
 # Define a route for your API endpoint
 @app.route('/nvidia_prediction', methods=['GET'])
@@ -38,7 +50,7 @@ if __name__ == '__main__':
     time.sleep(10)
     print('Directory contents:',os.listdir())
     time.sleep(10)
-    os.chdir(sys.path[0]+'/stock_prediction')
-    print('Directory contents:',os.listdir())
+    # os.chdir(sys.path[0]+'/stock_prediction')
+    # print('Directory contents:',os.listdir())
     app.run(debug=True)
     
