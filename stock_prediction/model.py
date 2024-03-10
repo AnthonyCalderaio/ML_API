@@ -50,7 +50,7 @@ def train_nvidia_model():
     todays_prediction = rf_regressor.predict(today_features)[0]
     todays_actual = today_features.iloc[:, [4]].values[0][0]
 
-
+    print('Successfully trained the model')
     # move below logic to: download_plot
 
     last_100 = y[-100:,]
@@ -66,6 +66,7 @@ def train_nvidia_model():
     plt.scatter(100, todays_prediction, color = 'red')
     plt.scatter(100, todays_actual, color = 'blue')
     plt.savefig(sys.path[0]+'/stock_prediction/figure.png')
+    print('successfully saved the plot')
 
     # download_plot(rf_regressor.predict(X), X)
 

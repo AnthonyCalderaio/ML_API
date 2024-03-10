@@ -32,7 +32,7 @@ def get_nvidia_data(start_date, end_date):
         end_date = yesterday_and_today()[1]
     
     nvidia_data = yf.download(name, start=start_date, end=end_date)
-    print('nvidia_data:',nvidia_data)
+    print('Successfully downloaded NVIDIA data:',nvidia_data)
     return nvidia_data 
 
 

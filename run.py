@@ -28,10 +28,10 @@ def nvidia_predictor():
     return send_file(image, as_attachment=True)
 
 if __name__ == '__main__':
-    save_to_csv(get_nvidia_data('2021-01-01', None), sys.path[0]+'/stock_prediction/latest_nvidia_data.csv')
-    time.sleep(300) 
-    train_nvidia_model()
-    time.sleep(300) 
-    report_daily(get_todays_prediction())
     # Run the Flask app
     app.run(debug=True)
+    save_to_csv(get_nvidia_data('2021-01-01', None), sys.path[0]+'/stock_prediction/latest_nvidia_data.csv')
+    time.sleep(10) 
+    train_nvidia_model()
+    time.sleep(10) 
+    report_daily(get_todays_prediction())
