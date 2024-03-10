@@ -1,4 +1,5 @@
 from os import wait
+import os
 from flask import Flask, jsonify, request, send_file
 from stock_prediction.model import train_nvidia_model
 from flask_cors import CORS
@@ -29,9 +30,15 @@ def nvidia_predictor():
 
 if __name__ == '__main__':
     # Run the Flask app
-    app.run(debug=True)
     save_to_csv(get_nvidia_data('2021-01-01', None), sys.path[0]+'/stock_prediction/latest_nvidia_data.csv')
     time.sleep(10) 
     train_nvidia_model()
     time.sleep(10) 
     report_daily(get_todays_prediction())
+    time.sleep(10)
+    print('Directory contents:',os.listdir())
+    time.sleep(10)
+    os.chdir(sys.path[0]+'/stock_prediction')
+    print('Directory contents:',os.listdir())
+    app.run(debug=True)
+    
