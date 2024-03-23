@@ -1,4 +1,4 @@
-from stock_prediction.get_nvda_data import get_nvidia_data
+from nvidia_stock_prediction.get_nvda_data import get_nvidia_data
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
@@ -10,23 +10,12 @@ import math
 
 todays_prediction = ''
 
-def get_todays_prediction():
-    return str(sys.path[0])+'/stock_prediction/figure.png'
-
-    
-    
-# Utilize this inside train_nvidia_model
-# def download_plot():
-#     plt.ylabel('Closing Price')
-#     plt.xlabel('Days')
-#     plt.scatter(pred, test, color = 'red')
-#     plt.scatter(pred, pred, color = 'blue')
-#     plt.savefig(sys.path[0]+'/stock_prediction/figure.png')
-
+def get_todays_nvidia_prediction():
+    return str(sys.path[0])+'/nvidia_stock_prediction/figure.png'
 
 def train_nvidia_model():
     # import the data
-    dataset = pd.read_csv(sys.path[0]+'/stock_prediction/latest_nvidia_data.csv')
+    dataset = pd.read_csv(sys.path[0]+'/nvidia_stock_prediction/latest_nvidia_data.csv')
 
     # define the data
     X = dataset.iloc[:, [1, 2, 3, 5, 6]].values
@@ -65,7 +54,7 @@ def train_nvidia_model():
     plt.scatter(range(len(last_100)), rf_regressor.predict(X[-100:]), color = 'orange')
     plt.scatter(100, todays_prediction, color = 'red')
     plt.scatter(100, todays_actual, color = 'blue')
-    plt.savefig(sys.path[0]+'/stock_prediction/figure.png')
+    plt.savefig(sys.path[0]+'/nvidia_stock_prediction/figure.png')
     print('successfully saved the plot')
 
     # download_plot(rf_regressor.predict(X), X)

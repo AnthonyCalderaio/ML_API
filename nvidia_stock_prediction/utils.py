@@ -1,18 +1,23 @@
 import time
 import smtplib
 import os
+import threading
 
 from email.message import EmailMessage
 from env_secrets import config
 
 
-def report_daily(reported_material=''):
+def report_daily_helper(reported_material=''):
     starttime=time.time()
     interval=86400 
     while True:
         message = 'Daily email ran with value: '+str(reported_material)+'. '
         send_email(message)
-        time.sleep(interval - ((time.time() - starttime) % interval))
+        # time.sleep(interval - ((time.time() - starttime) % interval))
+
+def report_daily(reported_material=''):
+    bg_thread = threading.Thread(target=report_daily_helper(reported_material))
+    bg_thread.start()
 
 def send_email(message = ''):
     server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -54,8 +59,8 @@ def csv_exists(path = '', file_name=''):
         return False
     
 def get_path_to_csv():
-    return str(os.getcwd()+'/stock_prediction/')
-    # csv_exists(os.getcwd()+'/stock_prediction/','nvidia_stock_data.csv')
+    return str(os.getcwd()+'/nvidia_stock_prediction/')
+    # csv_exists(os.getcwd()+'/nvidia_stock_prediction/','nvidia_stock_data.csv')
 
 def append_to_csv(path, row):
     with open(path,'a') as fd:
