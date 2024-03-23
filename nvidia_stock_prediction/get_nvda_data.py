@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from stock_prediction.utils import get_path_to_csv, csv_exists
+from nvidia_stock_prediction.utils import get_path_to_csv, csv_exists
 import yfinance as yf
 import pandas as pd
 
@@ -50,8 +50,8 @@ def get_nvidia_data(start_date, end_date):
 #         return False
     
 # def get_path_to_csv():
-#     return str(os.getcwd()+'/stock_prediction/')
-#     # csv_exists(os.getcwd()+'/stock_prediction/','nvidia_stock_data.csv')
+#     return str(os.getcwd()+'/nvidia_stock_prediction/')
+#     # csv_exists(os.getcwd()+'/nvidia_stock_prediction/','nvidia_stock_data.csv')
 
 
 # def save_to_csv(data_frame, desiredFileName):
