@@ -7,7 +7,7 @@ from email.message import EmailMessage
 from env_secrets import config
 
 
-def report_daily_helper(reported_material=''):
+def report_daily(reported_material=''):
     starttime=time.time()
     interval=86400 
     while True:
@@ -15,9 +15,6 @@ def report_daily_helper(reported_material=''):
         send_email(message)
         # time.sleep(interval - ((time.time() - starttime) % interval))
 
-def report_daily(reported_material=''):
-    bg_thread = threading.Thread(target=report_daily_helper(reported_material))
-    bg_thread.start()
 
 def send_email(message = ''):
     server = smtplib.SMTP('smtp.gmail.com', 587)

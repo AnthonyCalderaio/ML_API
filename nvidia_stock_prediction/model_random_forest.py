@@ -35,8 +35,10 @@ def train_nvidia_model():
     # mse = mean_squared_error(y_test, y_pred)
 
     today_features = get_nvidia_data(None, None)[['Open', 'High', 'Low', 'Volume','Adj Close']]
-    
-    todays_prediction = rf_regressor.predict(today_features)[0]
+
+    global todays_prediction
+    todays_prediction = rf_regressor.predict(today_features)[0];
+
     todays_actual = today_features.iloc[:, [4]].values[0][0]
 
     print('Successfully trained the model')
@@ -44,20 +46,25 @@ def train_nvidia_model():
 
     last_100 = y[-100:,]
 
-    plt.ylabel('Closing Price')
-    plt.xlabel('Days')
-    plt.title(
-          label='NVIDIA Prediction:'+str(math.trunc(todays_prediction))+' Todays actual: '+str(math.trunc(todays_actual))+'',
-          fontweight=5,
-          pad='2.0')
-    plt.scatter(range(len(last_100)), last_100, color = 'green')
-    plt.scatter(range(len(last_100)), rf_regressor.predict(X[-100:]), color = 'orange')
-    plt.scatter(100, todays_prediction, color = 'red')
-    plt.scatter(100, todays_actual, color = 'blue')
-    plt.savefig(sys.path[0]+'/nvidia_stock_prediction/figure.png')
-    print('successfully saved the plot')
+    # plt.ylabel('Closing Price')
+    # plt.xlabel('Days')
+    # plt.title(
+    #       label='NVIDIA Prediction:'+str(math.trunc(todays_prediction))+' Todays actual: '+str(math.trunc(todays_actual))+'',
+    #       fontweight=5,
+    #       pad='2.0')
+    # plt.scatter(range(len(last_100)), last_100, color = 'green')
+    # plt.scatter(range(len(last_100)), rf_regressor.predict(X[-100:]), color = 'orange')
+    # plt.scatter(100, todays_prediction, color = 'red')
+    # plt.scatter(100, todays_actual, color = 'blue')
+    # plt.savefig(sys.path[0]+'/nvidia_stock_prediction/figure.png')
+    # print('successfully saved the plot')
 
     # download_plot(rf_regressor.predict(X), X)
-
+    print('returning:',todays_prediction)
     return (todays_prediction)
 
+
+def todays_prediction_global():
+    global todays_prediction
+    print('global is:',todays_prediction)
+    return todays_prediction

@@ -35,7 +35,7 @@ def initialize_data():
     train_nvidia_model()
 
     # Report on the model with todays prediction
-    report_daily(get_todays_nvidia_prediction())
+    # report_daily(get_todays_nvidia_prediction())
 
 # Stock predictor route
 @app.route('/nvidia_prediction', methods=['GET'])
